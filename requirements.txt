@@ -1,0 +1,2 @@
+-e git+https://github.com/necromanteion/chitchat.git@d8a8628a17fb38ca773fd73514c17402c4775a1e#egg=chitchat-master
+requests==2.9.1
