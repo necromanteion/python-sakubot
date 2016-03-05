@@ -1,18 +1,22 @@
 import random
+import chitchat as cc
 
-@chitchat.plugin(channel, nick, text='.belly')
-def belly(self, channel, nick):
-	if nick == necromanteion:
-		lewd = ['N-no..', 'S-stop..', 'T-that\'s lewd necro-nii-sama..', 'If that\'s what you like..', 'P-please stop, t-that tickles..']
-		return cc.privmsg(channel, nick, message=random.choice(lewd))
-	else:
-		return cc.kick(channel, nick, message='W-what do you think you\'re doing?!')
+@cc.on(nick='necromanteion', text='.belly')
+def belly(prefix, target, message):
+	lewd = ['N-no..', 'S-stop..', "T-that's lewd necro-nii-sama..", "If that's what you like..", 'P-please stop, t-that tickles..']
+	return cc.privmsg(target, message=random.choice(lewd))
+
+not_necro = lambda prefix, *args: prefix.nick != 'necromanteion'
+
+@cc.on(nick=not_necro, text='.belly')
+def belly2(prefix, channel, message):
+	return cc.kick(channel, prefix.nick, message="W-what do you think you're doing?!")
 		
-@chitchat.plugin(channel, nick, text='.paizuri')
-def paizuri(self, channel, nick):
-	return cc.kick(channel, nick, message='Too far.')
+@cc.plugin(channel, nick, text='.paizuri')
+def paizuri(prefix, channel, message):
+	return cc.kick(channel, prefix.nick, message='Too far.')
 	
-@chitchat.plugin(channel, nick, text='.help')
-def help(self, channel, nick):
+@cc.plugin(text='.help')
+def help(prefix, channel, message):
 	helppls = ["Do .rem to roll on the Retarded Egg Machine!", "Do .padherder (name) to check someone\'s padherder or .padherder (name) (link) to get in yours!"] #all for now i guess
-	return (cc.privmsg(channel, nick, helppls[i]) for i in helppls)  #no idea if werk
+	return (cc.privmsg(prefix.nick, help) for help in helppls)
