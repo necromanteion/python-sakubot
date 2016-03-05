@@ -8,11 +8,12 @@ import requests
 def compare(prefix, channel, message):
 
     try:
-        id1, id2, *_ = message.split(maxsplit=2)
+        _, id1, id2, *_ = message.split(maxsplit=3)
         
     except ValueError:
         return cc.privmsg(target, 'Onii-chan you baka! Use it like this: ".compare <id 1> <id 2>"')
     
+    id1, id2 = int(id1), int(id2)    
     return (cc.privmsg(channel, line) for line in statcomp(id1, id2))
 
 
