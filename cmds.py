@@ -1,22 +1,35 @@
+import asyncio
+import collections
 import random
 import chitchat as cc
 
-@cc.on(nick='necromanteion', text='.belly')
+
 def belly(prefix, target, message):
 	lewd = ['N-no..', 'S-stop..', "T-that's lewd necro-nii-sama..", "If that's what you like..", 'P-please stop, t-that tickles..']
 	return cc.privmsg(target, message=random.choice(lewd))
 
 not_necro = lambda prefix, *args: prefix.nick != 'necromanteion'
 
-@cc.on(nick=not_necro, text='.belly')
+
 def belly2(prefix, channel, message):
 	return cc.kick(channel, prefix.nick, message="W-what do you think you're doing?!")
 		
-@cc.plugin(channel, nick, text='.paizuri')
-def paizuri(prefix, channel, message):
-	return cc.kick(channel, prefix.nick, message='Too far.')
+
+def paizuri(prefix, channel, message, cache=collections.defaultdict(lambda: 1)):	
 	
-@cc.plugin(text='.help')
+	ban_time = cache[prefix.nick]
+	cache[prefix.nick] *= 2
+	
+	yield cc.mode(channel, '+b', prefix.nick)
+	yield cc.kick(channel, prefix.nick,
+				  message='Banned for {0} second{1}!'.format(ban_time, 's' if ban_time > 1 else ''))
+	
+	yield from asyncio.sleep(ban_time)
+	yield cc.mode(channel, '-b', prefix.nick)
+	yield cc.invite(prefix.nick, channel)
+	
+
 def help(prefix, channel, message):
-	helppls = ["Do .rem to roll on the Retarded Egg Machine!", "Do .padherder (name) to check someone\'s padherder or .padherder (name) (link) to get in yours!"] #all for now i guess
-	return (cc.privmsg(prefix.nick, help) for help in helppls)
+	helppls = ['Do ".rem" to roll on the Retarded Egg Machine!',
+			   'Try ".paizuri" if you\'re a filthy perv!'] #all for now i guess
+	return (cc.notice(prefix.nick, line) for line in helppls)
