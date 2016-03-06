@@ -10,6 +10,7 @@ def belly(prefix, target, message):
 
 not_necro = lambda prefix, *args: prefix.nick != 'necromanteion'
 
+bellylist = ['.belly', '.tummy', '.navelingus', '.nakadashi', '.ochinchin', '.bellyzuri', '.cum', '.midriff', '.cumdump', '.bully', '.dick', '.glistening', '.bellypillow', '.raspberry', '.tummies', '.bellies']
 
 def belly2(prefix, channel, message):
 	return cc.kick(channel, prefix.nick, message="W-what do you think you're doing?!")
