@@ -33,3 +33,6 @@ def help(prefix, channel, message):
 	helppls = ['Do ".rem" to roll on the Retarded Egg Machine!',
 			   'Try ".paizuri" if you\'re a filthy perv!'] #all for now i guess
 	return (cc.notice(prefix.nick, line) for line in helppls)
+
+def kick(prefix, channel, message):
+	return cc.kick(channel, *nicks, message='Go away!')
