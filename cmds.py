@@ -35,4 +35,5 @@ def help(prefix, channel, message):
 	return (cc.notice(prefix.nick, line) for line in helppls)
 
 def kick(prefix, channel, message):
+	_, *nicks = message.split()
 	return cc.kick(channel, *nicks, message='Go away!')
