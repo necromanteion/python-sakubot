@@ -13,7 +13,7 @@ sakubot.on(nick='necromanteion', text=cc.firstword('.belly'))(cmds.belly)
 sakubot.on(text=lambda _, __, msg: msg.strip(''.join(ord(i) for i in range(33))).split()[0] in bellylist)
 sakubot.on(text=cc.firstword('.paizuri'))(cmds.paizuri)
 sakubot.on(text=cc.firstword('.help'))(cmds.help)
-sakubot.register('PRIVMSG', cmds.kick, text=cc.firstword('kick'))
+sakubot.register('PRIVMSG', nick in nicklist, cmds.kick, text=cc.firstword('kick'))
 sakubot.on(text=cc.firstword('.compare'))(pdx.compare)
 
 @sakubot.on('connected')
