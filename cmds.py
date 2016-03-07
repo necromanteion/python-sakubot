@@ -35,6 +35,8 @@ def help(prefix, channel, message):
 			   'Try ".paizuri" if you\'re a filthy perv!'] #all for now i guess
 	return (cc.notice(prefix.nick, line) for line in helppls)
 
+nicklist = ['Didac', 'necromanteion', 'FbW', 'WizardofOrz', 'Waah', 'Excorcism']
+
 def kick(prefix, channel, message):
 	_, *nicks = message.split()
 	return cc.kick(channel, *nicks, message='Go away!')
