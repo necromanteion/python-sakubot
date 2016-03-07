@@ -14,6 +14,7 @@ sakubot.on(nick=cmds.not_necro, text=cmds.bellyblocker)(cmds.belly2)
 sakubot.on(text=cc.firstword('.paizuri'))(cmds.paizuri)
 sakubot.on(text=cc.firstword('.help'))(cmds.help)
 sakubot.register('PRIVMSG', cmds.kick, text=cc.firstword('.kick'))
+sakubot.register('PRIVMSG', cmds.kick, nick=cmds.nicklist, text=cc.firstword('kick'))
 sakubot.on(text=cc.firstword('.compare'))(pdx.compare)
 
 @sakubot.on('connected')

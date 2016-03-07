@@ -25,7 +25,6 @@ def belly(prefix, target, message):
 
 not_necro = lambda prefix, *args: prefix.nick != 'necromanteion'
 
-
 def belly2(prefix, channel, message):
     return cc.kick(channel, prefix.nick, message='{0.nick} no ecchi!'.format(prefix))
         
@@ -48,6 +47,8 @@ def help(prefix, channel, message):
     helppls = ['Do ".rem" to roll on the Retarded Egg Machine!',
                'Try ".paizuri" if you\'re a filthy perv!'] #all for now i guess
     return (cc.notice(prefix.nick, line) for line in helppls)
+
+nicklist = ['Didac', 'necromanteion', 'FbW', 'WizardofOrz', 'Waah', 'Excorcism']
 
 def kick(prefix, channel, message):
     _, *nicks = message.split()
