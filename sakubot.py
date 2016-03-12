@@ -15,6 +15,7 @@ sakubot.on(text=cc.firstword('.paizuri'))(cmds.paizuri)
 sakubot.on(text=cc.firstword('.help'))(cmds.help)
 sakubot.register('PRIVMSG', cmds.kick, nick=cmds.nicklist, text=cc.firstword('.kick'))
 sakubot.on(text=cc.firstword('.compare'))(pdx.compare)
+sakubot.on(text=cc.firstword('.sakuball'))(cmds.sakuball)
 
 @sakubot.on('connected')
 def identify(*args):
