@@ -58,4 +58,4 @@ sakuballList = ['Yes!', 'I think you shouldn\'t do that.', 'Kill yourself.', 'Ma
         'I think that will end up nicely. :3', 'Please give me some time to consider the answer.']
 
 def sakuball(prefix, channel, message):
-    return cc.privmsg(channel, message='{0}: {1}'.format(prefix.nick, random.choice(sakuballList))
+    return cc.privmsg(channel, message='{0}: {1}'.format(prefix.nick, random.choice(sakuballList)))
