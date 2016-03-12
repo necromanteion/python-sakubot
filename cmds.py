@@ -55,3 +55,7 @@ def kick(prefix, channel, message):
     return cc.kick(channel, *nicks, message='Go away!')
 
 sakuballList = ['Yes!', 'I think you shouldn\'t do that.', 'Kill yourself.', 'Maybe you should do another thing.', 'Yes! It will be fun!',
+        'I think that will end up nicely. :3', 'Please give me some time to consider the answer.']
+
+def sakuball(prefix, channel, message):
+    return cc.privmsg(target, message='{0}: {1}'.format(prefix.nick, random.choice(sakuballList))
