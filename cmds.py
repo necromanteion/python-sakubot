@@ -51,8 +51,7 @@ def help(prefix, channel, message):
 nicklist = ['Didac', 'necromanteion', 'FbW', 'WizardofOrz', 'Waah', 'Excorcism']
 
 def kick(prefix, channel, message):
-    _, *nicks = message.split()
-    return cc.kick(channel, *nicks, message='Go away!')
+    return cc.kick(channel, prefix.nick=message[i+1], message='Go away!') for i in range(len(message)-1)
 
 sakuballList = ['Yes!', 'I think you shouldn\'t do that.', 'Kill yourself.', 'Maybe you should do another thing.', 'Yes! It will be fun!',
         'I think that will end up nicely. :3', 'Please give me some time to consider the answer.']
