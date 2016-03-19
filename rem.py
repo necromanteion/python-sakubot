@@ -10,7 +10,7 @@ async def command(prefix, target, message):
         databess.removeStones(target, 1)
         return rem(prefix, target, message)
 
-pantheons=["pantheons here"]
+pantheons=[greek1, greek2, japanese1, japanese2, indian1, indian2, egyptian1, egyptian2, hero, threekingdoms, samurai, constellation1, constellation2, chinese]
 
 def rem(channel, nick, message)
     if message[1] == gf and (nick in cmds.nicklist):
