@@ -1,5 +1,6 @@
 import argparse
 import bisect
+import collections
 import itertools
 import random
 import re
@@ -7,7 +8,7 @@ import re
 from . import utils
 
 
-class Event:
+class Event(collections.abc.MutableMapping):
     
     
     __slots__ = ('title', 'members', 'match')
@@ -39,8 +40,8 @@ class Event:
             float chance between 0 and 1, inclusive
         """
         
-        chance = self.members.get(card_id, 0)
-        total = sum(self.members.values())
+        chance = self.get(card_id, 0)
+        total = sum(self.values())
         
         # chance of rolling = 1 - chance of not rolling
         return 1 - ((total - chance) / total) ** n
@@ -60,7 +61,7 @@ class Event:
             TypeError if `n` is not an integer
         """
         
-        choices, weights = zip(*self.members.items())
+        choices, weights = zip(*self.items())
         cumdist = list(itertools.accumulate(weights))
         
         for i in range(n):
@@ -87,7 +88,7 @@ class Event:
             ValueError if `card_id` is not featured in this event
         """
         
-        if card_id not in self.members:
+        if card_id not in self:
             raise ValueError('card #{0!r} is not featured in this event'.format(card_id))
         
         rollgen = self.roll(max_rolls)
@@ -98,17 +99,44 @@ class Event:
                 return i
         
         return False
+    
+    
+    def __getitem__(self, key):
+        return self.members[key]
+    
+    
+    def __setitem__(self, key, value):
+        self.members[key] = value
+    
+    
+    def __delitem__(self, key):
+        del self.members[key]
+        
+        
+    def __iter__(self):
+        return iter(self.members.keys())
+    
+    
+    def __len__(self):
+        return len(self.members)
         
         
     def __add__(self, other):
         
-        if isinstance(other, Event):
-            title = ', '.join(filter(bool, [self.title, other.title])) or None
-            members = utils.multmerge(self.members, other.members)
+        if isinstance(other, collections.abc.MutableMapping):
+            
+            titles = self.title, getattr(other, 'title', None)
+            title = ', '.join(filter(bool, titles)) or None
+            
+            members = utils.multmerge(self, other)
             
             return Event(title, members)
         
         return NotImplemented
+    
+    
+    def __radd__(self, other):
+        return self + other
         
         
     def __repr__(self):
