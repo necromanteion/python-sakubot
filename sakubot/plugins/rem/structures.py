@@ -123,7 +123,8 @@ class Event(collections.abc.MutableMapping):
         
     def __add__(self, other):
         
-        if isinstance(other, collections.abc.MutableMapping):
+        if isinstance(other, collections.abc.MutableMapping) and (
+            not isinstance(other, MutuallyExclusiveEvent)):
             
             titles = self.title, getattr(other, 'title', None)
             title = ', '.join(filter(bool, titles)) or None
@@ -143,6 +144,20 @@ class Event(collections.abc.MutableMapping):
         # return f'{self.__class__.__name__}(title={self.title}, members={self.members})'
         rep = '{0.__class__.__name__}(title={0.title!r}, members={0.members!r})'
         return rep.format(self)
+    
+    
+class MutuallyExclusiveEvent(Event):
+    
+    
+    __slots__ = ('title', 'members', 'match')
+    
+    
+    def __add__(self, other):
+        
+        if isinstance(other, collections.abc.MutableMapping):
+            return self
+            
+        return NotImplemented
     
     
 class ErrorRaisingArgumentParser(argparse.ArgumentParser):

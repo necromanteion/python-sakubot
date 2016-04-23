@@ -19,7 +19,7 @@ def multmerge(*dicts):
     Multiplicatively merge dictionaries.
     
     >>> d = dict(a=2), dict(a=3, b=2)
-    >>> multjoin(*d)
+    >>> multmerge(*d)
     {'a': 6, 'b': 2}
     """
     

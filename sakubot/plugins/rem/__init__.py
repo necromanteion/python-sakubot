@@ -2,7 +2,7 @@ import chitchat as cc
 from sakubot import sakubot
 from sakubot.plugins import paddb
 
-from .events import EVENTS
+from .events import DEFAULT, EVENTS
 from .parsing import first_int, matches
 from .structures import ErrorRaisingArgumentParser
 from .utils import combine, percent
@@ -26,7 +26,7 @@ def rem(prefix, target, message):
         return usage(prefix, target)
     
     # build weighted rem from unparsed args
-    rem = combine(combine(matches(arg, EVENTS), initializer=dict()) for arg in args)
+    rem = combine(combine(matches(arg, EVENTS), initializer=DEFAULT) for arg in args)
     
     if flags.chance:
         return chance(prefix, target, event=rem, card=flags.chance, n=flags.n)

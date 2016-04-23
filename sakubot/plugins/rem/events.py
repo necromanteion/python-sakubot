@@ -1,4 +1,4 @@
-from .structures import Event
+from .structures import Event, MutuallyExclusiveEvent
 from .utils import multmerge
 
 GALA_RATE = 2
@@ -36,8 +36,10 @@ DEFAULT = Event(
         dict.fromkeys([379, 381, 383, 385, 387, 556, 558, 560, 562, 564, 1131, 1243,
                        1356, 1358, 1374], SIX_STAR_RATE)
     ),
-    pattern='^\.rem$'
+    pattern=None
 )
+
+### GALAS ###
 
 FIRE_GALA = Event(
     title='Gala of Flame',
@@ -87,6 +89,8 @@ DARK_GALA = Event(
                            2194, 2272, 2423, 2560], GALA_RATE),
     pattern=r'^da?r?k'
 )
+
+### PANTHEONS ###
 
 GRECO = Event(
     title='Greco-Roman',
@@ -250,7 +254,20 @@ CONSTELLATIONS2 = Event(
     pattern=r'^c(on(st(ell*(ations?)?)?)?)?2(\.0)?$'
 )
 
-EVENTS = [DEFAULT, FIRE_GALA, WATER_GALA, WOOD_GALA, LIGHT_GALA, DARK_GALA,
-          GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK, ARCHANGEL, ARCHDEMON,
-          CHINESE, JAPANESE2, HEROES, THREE_KINGDOMS, INDIAN2, EGYPTIAN2, ANGELS,
-          SENGOKU, CONSTELLATIONS, CONSTELLATIONS2]
+### COLLABS ###
+
+DC_UNIVERSE = MutuallyExclusiveEvent(
+    title='DC Universe',
+    members=multmerge(
+        dict.fromkeys([1679, 1681, 1683, 1685, 1687], FOUR_STAR_RATE),
+        dict.fromkeys([1675, 1677, 2826], FIVE_STAR_RATE)
+    ),
+    pattern=r'((bat|super)(man)?|dc)'
+)
+
+EVENTS = [FIRE_GALA, WATER_GALA, WOOD_GALA, LIGHT_GALA, DARK_GALA,
+          GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK,
+          ARCHANGEL, ARCHDEMON, CHINESE, JAPANESE2, HEROES,
+          THREE_KINGDOMS, INDIAN2, EGYPTIAN2, ANGELS, SENGOKU,
+          CONSTELLATIONS, CONSTELLATIONS2,
+          DC_UNIVERSE]
