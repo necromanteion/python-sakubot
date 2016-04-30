@@ -11,9 +11,6 @@ from . import utils
 class Event(collections.abc.MutableMapping):
     
     
-    __slots__ = ('title', 'members', 'match')
-    
-    
     def __init__(self, title, members, pattern=None):
         self.title = title
         self.members = members
@@ -22,10 +19,22 @@ class Event(collections.abc.MutableMapping):
         
     
     @property
-    def padded_title(self):
-        # title = f'{self.title} ' if self.title else ''
-        title = '{0.title} '.format(self) if self.title else ''
+    def title(self):
+        title = ', '.join(filter(None, self._title))
+            
         return title
+    
+    
+    @title.setter
+    def title(self, value):
+        self._title = [value] if isinstance(value, (str, type(None))) else list(value)
+        
+        
+    @property
+    def formatted_title(self):
+        title = self.title + ' REM'
+        
+        return title.strip()
         
     
     def chance(self, card_id, n=1):
@@ -40,11 +49,11 @@ class Event(collections.abc.MutableMapping):
             float chance between 0 and 1, inclusive
         """
         
-        chance = self.get(card_id, 0)
+        weight = self.get(card_id, 0)
         total = sum(self.values())
         
         # chance of rolling = 1 - chance of not rolling
-        return 1 - ((total - chance) / total) ** n
+        return 1 - (1 - weight / total) ** n
         
         
     def roll(self, n=1):
@@ -123,15 +132,14 @@ class Event(collections.abc.MutableMapping):
         
     def __add__(self, other):
         
-        if isinstance(other, collections.abc.MutableMapping) and (
-            not isinstance(other, MutuallyExclusiveEvent)):
+        # can't use isinstance(other, Event) because MutuallyExclusiveEvent instances
+        # are considered Event instances due to inheritance
+        if type(other) == type(self):
             
-            titles = self.title, getattr(other, 'title', None)
-            title = ', '.join(filter(bool, titles)) or None
-            
+            titles = self.title, other.title            
             members = utils.multmerge(self, other)
             
-            return Event(title, members)
+            return Event(titles, members)
         
         return NotImplemented
     
@@ -141,7 +149,6 @@ class Event(collections.abc.MutableMapping):
         
         
     def __repr__(self):
-        # return f'{self.__class__.__name__}(title={self.title}, members={self.members})'
         rep = '{0.__class__.__name__}(title={0.title!r}, members={0.members!r})'
         return rep.format(self)
     
@@ -149,12 +156,9 @@ class Event(collections.abc.MutableMapping):
 class MutuallyExclusiveEvent(Event):
     
     
-    __slots__ = ('title', 'members', 'match')
-    
-    
     def __add__(self, other):
         
-        if isinstance(other, collections.abc.MutableMapping):
+        if isinstance(other, Event):
             return self
             
         return NotImplemented
@@ -171,3 +175,9 @@ class ErrorRaisingArgumentParser(argparse.ArgumentParser):
         
         if 'value' in message:
             raise ValueError(message)
+        
+    def format_usage(self):
+        # remove preceding 'usage: ' and concluding newline
+        usage = super().format_usage().strip().split()[1:]
+        
+        return ' '.join(usage)

@@ -1,10 +1,35 @@
 from .structures import Event, MutuallyExclusiveEvent
 from .utils import multmerge
 
+### RATES ###
+
 GALA_RATE = 2
 FOUR_STAR_RATE = 6
 FIVE_STAR_RATE = 3
 SIX_STAR_RATE = 1
+
+### UNIQUE FESTS ###
+
+CURRENT = Event(
+    title="Director's Choice Carnival",
+    members=multmerge(
+        dict.fromkeys([490, 492, 494, 496, 498, 1130, 1359, 1826, 1828, 1830, 1832,
+                       1834, 2093, 2095, 2097, 2099, 2101], FIVE_STAR_RATE),
+        dict.fromkeys([972, 982, 1270, 1516], SIX_STAR_RATE)
+    ),
+    pattern='^cur+(ent)?$'
+) + INDIAN + INDIAN2
+
+
+GFE4X = Event(
+    title="4x God Fest Exclusives",
+    members=dict.fromkeys([364, 632, 640, 642, 911, 913, 1088, 1107, 1359, 1374, 1585,
+                           1587, 1669, 1671, 1673, 1946, 1948, 1950, 1952, 2141, 2143,
+                           2145, 2147, 2149, 2440, 2442, 2508, 2562, 2564, 2591, 2640,
+                           2710, 2712], 4),
+    pattern='^4x(gfe?)?$'
+)
+
 
 DEFAULT = Event(
     title=None,
@@ -34,7 +59,13 @@ DEFAULT = Event(
                        2421, 2423, 2552, 2554, 2556, 2558, 2560], FIVE_STAR_RATE),
         # 6*
         dict.fromkeys([379, 381, 383, 385, 387, 556, 558, 560, 562, 564, 1131, 1243,
-                       1356, 1358, 1374], SIX_STAR_RATE)
+                       1356, 1358, 1374], SIX_STAR_RATE),
+        # GFE 5*
+        dict.fromkeys([632, 640, 911, 1359, 1585, 1669, 1671, 1946, 1952, 2141, 2143,
+                       2149, 2440, 2562, 2640, 2710], FIVE_STAR_RATE),
+        # GFE 6*
+        dict.fromkeys([364, 642, 913, 1088, 1107, 1374, 1587, 1673, 1948, 1950, 2145,
+                       2147, 2442, 2508, 2564, 2591, 2712], SIX_STAR_RATE)
     ),
     pattern=None
 )
@@ -265,9 +296,9 @@ DC_UNIVERSE = MutuallyExclusiveEvent(
     pattern=r'((bat|super)(man)?|dc)'
 )
 
-EVENTS = [FIRE_GALA, WATER_GALA, WOOD_GALA, LIGHT_GALA, DARK_GALA,
-          GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK,
-          ARCHANGEL, ARCHDEMON, CHINESE, JAPANESE2, HEROES,
-          THREE_KINGDOMS, INDIAN2, EGYPTIAN2, ANGELS, SENGOKU,
-          CONSTELLATIONS, CONSTELLATIONS2,
+EVENTS = [CURRENT, GFE4X,
+          FIRE_GALA, WATER_GALA, WOOD_GALA, LIGHT_GALA, DARK_GALA,
+          GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK, ARCHANGEL,
+          ARCHDEMON, CHINESE, JAPANESE2, HEROES, THREE_KINGDOMS, INDIAN2,
+          EGYPTIAN2, ANGELS, SENGOKU, CONSTELLATIONS, CONSTELLATIONS2,
           DC_UNIVERSE]
