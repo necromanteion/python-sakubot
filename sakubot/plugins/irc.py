@@ -5,6 +5,7 @@ Basic IRC commands for Sakubot.
 import chitchat as cc
 from chitchat.constants import RPL_WELCOME
 import os
+import types
 
 from sakubot import sakubot
 
@@ -19,7 +20,7 @@ def identify(*args):
     password = os.environ.get('RIZON_BOT')
     yield cc.privmsg('nickserv', 'identify {0}'.format(password))
     # wait for our password to be accepted so our vhost will show up
-    yield from sakubot.wait_for('NOTICE', text='password accepted')
+    yield from sakubot.wait_for('NOTICE', text=cc.operator.contains('password accepted'))
     
     yield cc.join('#sakubot', '#padg')
 
@@ -30,15 +31,15 @@ def pong(prefix, target):
 
 
 @sakubot.on('DISCONNECTED')
-def reconnect(host, port, exc=None):
+async def reconnect(host, port, exc=None):
     
     if exc:
         raise exc
     
     # reconnect to the server
-    yield from sakubot.connect(host, port)
+    await sakubot.connect(host, port)
 
 
-@sakubot.on('KICK', text='Sakubot')
+@sakubot.on('KICK', target='Sakubot')
 def rejoin(prefix, channel, target, reason):
     return cc.join(channel)
