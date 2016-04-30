@@ -14,8 +14,7 @@ class Event(collections.abc.MutableMapping):
     def __init__(self, title, members, pattern=None):
         self.title = title
         self.members = members
-        
-        self.match = re.compile(pattern, flags=re.I).match if pattern else None
+        self.pattern = pattern
         
     
     @property
@@ -35,6 +34,30 @@ class Event(collections.abc.MutableMapping):
         title = self.title + ' REM'
         
         return title.strip()
+    
+    
+    @property
+    def pattern(self):
+        return self._pattern
+    
+    
+    @pattern.setter
+    def pattern(self, value):
+        self._pattern = re.compile(value, flags=re.I) if value else None
+        
+        
+    @pattern.deleter
+    def pattern(self):
+        del self._pattern
+        
+        
+    @property
+    def match(self):
+        try:
+            return self._pattern.match
+        
+        except AttributeError:
+            return None
         
     
     def chance(self, card_id, n=1):

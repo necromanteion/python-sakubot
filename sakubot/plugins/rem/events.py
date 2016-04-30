@@ -10,15 +10,15 @@ SIX_STAR_RATE = 1
 
 ### UNIQUE FESTS ###
 
-CURRENT = Event(
+DIRECTORS = Event(
     title="Director's Choice Carnival",
     members=multmerge(
         dict.fromkeys([490, 492, 494, 496, 498, 1130, 1359, 1826, 1828, 1830, 1832,
                        1834, 2093, 2095, 2097, 2099, 2101], FIVE_STAR_RATE),
         dict.fromkeys([972, 982, 1270, 1516], SIX_STAR_RATE)
     ),
-    pattern='^cur+(ent)?$'
-) + INDIAN + INDIAN2
+    pattern=r'^dir(ector)?s?$'
+)
 
 
 GFE4X = Event(
@@ -27,7 +27,7 @@ GFE4X = Event(
                            1587, 1669, 1671, 1673, 1946, 1948, 1950, 1952, 2141, 2143,
                            2145, 2147, 2149, 2440, 2442, 2508, 2562, 2564, 2591, 2640,
                            2710, 2712], 4),
-    pattern='^4x(gfe?)?$'
+    pattern=r'^4x(gfe?)?$'
 )
 
 
@@ -296,7 +296,10 @@ DC_UNIVERSE = MutuallyExclusiveEvent(
     pattern=r'((bat|super)(man)?|dc)'
 )
 
-EVENTS = [CURRENT, GFE4X,
+CURRENT = DIRECTORS + INDIAN + INDIAN2
+CURRENT.pattern = r'^cur+(ent)?$'
+
+EVENTS = [CURRENT, DIRECTORS, GFE4X,
           FIRE_GALA, WATER_GALA, WOOD_GALA, LIGHT_GALA, DARK_GALA,
           GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK, ARCHANGEL,
           ARCHDEMON, CHINESE, JAPANESE2, HEROES, THREE_KINGDOMS, INDIAN2,
