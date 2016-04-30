@@ -44,7 +44,7 @@ def format_tags(tags, skip=None):
             category, t = None, tag
         
         if category not in skip:
-            formatted = '{0} (1[0])'.format(t, category or '?')
+            formatted = '{0} ({1[0]})'.format(t, category or '?')
             parsed.append(formatted)
         
     return 'tags: ' + ', '.join(sorted(parsed))
