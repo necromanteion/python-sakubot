@@ -3,9 +3,9 @@ from .utils import multmerge
 
 ### RATES ###
 
-GALA_RATE = 2
+GALA_RATE = 1.5
 FOUR_STAR_RATE = 6
-FIVE_STAR_RATE = 3
+FIVE_STAR_RATE = 4
 SIX_STAR_RATE = 1
 
 ### UNIQUE FESTS ###
@@ -74,11 +74,10 @@ DEFAULT = Event(
 
 FIRE_GALA = Event(
     title='Gala of Flame',
-    members=dict.fromkeys([112, 113, 122, 132, 236, 352, 353, 368, 378, 379, 414, 415,
-                           490, 555, 556, 567, 620, 630, 745, 799, 1065, 1076, 1120,
-                           1121, 1231, 1243, 1330, 1349, 1350, 1355, 1356, 1412, 1413,
-                           1502, 1503, 1614, 1649, 1659, 1706, 1826, 1881, 2093, 2185,
-                           2190, 2264, 2415, 2552], GALA_RATE),
+    members=dict.fromkeys([112, 132, 236, 353, 368, 378, 415, 490, 555, 567, 620, 630,
+                           745, 799, 1065, 1121, 1231, 1330, 1350, 1355, 1413, 1503,
+                           1614, 1649, 1659, 1706, 1826, 1881, 2093, 2185, 2190, 2264,
+                           2415, 2552, 2665], GALA_RATE),
     pattern=r'^f(ire)?$'
 )
 
@@ -296,7 +295,7 @@ DC_UNIVERSE = MutuallyExclusiveEvent(
     pattern=r'((bat|super)(man)?|dc)'
 )
 
-CURRENT = DIRECTORS + INDIAN + INDIAN2
+CURRENT = FIRE_GALA
 CURRENT.pattern = r'^cur+(ent)?$'
 
 EVENTS = [CURRENT, DIRECTORS, GFE4X,
