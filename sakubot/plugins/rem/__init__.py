@@ -24,7 +24,7 @@ def rem(prefix, target, message):
     try:
         flags, args = parser.parse_known_args(message.split())
     
-    except ValueError:
+    except (TypeError, ValueError):
         return usage(prefix, target)
     
     # build weighted rem from unparsed args
