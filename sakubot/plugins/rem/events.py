@@ -365,7 +365,7 @@ ACADEMY = MutuallyExclusiveEvent(
     members=multmerge(
         dict.fromkeys([2813, 2814], 2),
         dict.fromkeys([2014, 2015, 2017], 3),
-        dict.fromkeys([2515, 2821], 6),
+        dict.fromkeys([2815, 2821], 6),
         dict.fromkeys([2816, 2817, 2818, 2819, 2820], 15)
     ),
     pattern=r'^(academy|school)$'
