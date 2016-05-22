@@ -3,9 +3,9 @@ from .utils import multmerge
 
 ### RATES ###
 
-GALA_RATE = 1.5
+GALA_RATE = 2
 FOUR_STAR_RATE = 6
-FIVE_STAR_RATE = 4
+FIVE_STAR_RATE = 3
 SIX_STAR_RATE = 1
 
 ### UNIQUE FESTS ###
@@ -74,10 +74,11 @@ DEFAULT = Event(
 
 FIRE_GALA = Event(
     title='Gala of Flame',
-    members=dict.fromkeys([112, 132, 236, 353, 368, 378, 415, 490, 555, 567, 620, 630,
-                           745, 799, 1065, 1121, 1231, 1330, 1350, 1355, 1413, 1503,
-                           1614, 1649, 1659, 1706, 1826, 1881, 2093, 2185, 2190, 2264,
-                           2415, 2552, 2665], GALA_RATE),
+    members=dict.fromkeys([112, 113, 122, 132, 236, 352, 353, 368, 378, 379, 414, 415,
+                           490, 555, 556, 567, 620, 630, 745, 799, 1065, 1076, 1120,
+                           1121, 1231, 1243, 1330, 1349, 1350, 1355, 1356, 1412, 1413,
+                           1502, 1503, 1614, 1649, 1659, 1706, 1826, 1881, 2093, 2185,
+                           2190, 2264, 2415, 2552], GALA_RATE),
     pattern=r'^f(ire)?$'
 )
 
@@ -295,7 +296,17 @@ DC_UNIVERSE = MutuallyExclusiveEvent(
     pattern=r'((bat|super)(man)?|dc)'
 )
 
-CURRENT = FIRE_GALA
+FINAL_FANTASY = MutuallyExclusiveEvent(
+    title='Final Fantasy',
+    members=multmerge(
+        dict.fromkeys([2039, 2045, 2047, 2049, 2783], 7),
+        dict.fromkeys([2033, 2035, 2037, 2041, 2770, 2772, 2774, 2776, 2782], 5),
+        dict.fromkeys([2029, 2031, 2043, 2767, 2778], 4)
+    ),
+    pattern=r'^ff$'
+)
+
+CURRENT = DIRECTORS + INDIAN + INDIAN2
 CURRENT.pattern = r'^cur+(ent)?$'
 
 EVENTS = [CURRENT, DIRECTORS, GFE4X,
@@ -303,4 +314,4 @@ EVENTS = [CURRENT, DIRECTORS, GFE4X,
           GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK, ARCHANGEL,
           ARCHDEMON, CHINESE, JAPANESE2, HEROES, THREE_KINGDOMS, INDIAN2,
           EGYPTIAN2, ANGELS, SENGOKU, CONSTELLATIONS, CONSTELLATIONS2,
-          DC_UNIVERSE]
+          DC_UNIVERSE, FINAL_FANTASY]
