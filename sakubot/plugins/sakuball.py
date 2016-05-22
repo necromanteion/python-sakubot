@@ -8,8 +8,6 @@ options = [
     'Yes!',
     'Do it onii-chan!',
     'Sounds like fun!',
-    'Best of luck onii-chan!',
-    "It'll all work out okay!",
     '👍 Two thumbs up! 👍',
     # negative
     'No!',
@@ -20,9 +18,7 @@ options = [
     '👎 Two thumbs down! 👎',
     # neutral
     'Hmm... Let me think about it.',
-    "It can't be helped.",
     'You only live once, onii-chan.',
-    "If you can do it tomorrow, don't do it today!",
     'Your life is in shambles, onii-chan.',
     "Sorry onii-chan I'm out of thumbs."
 ]
