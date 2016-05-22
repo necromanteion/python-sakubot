@@ -285,7 +285,7 @@ CONSTELLATIONS2 = Event(
     pattern=r'^c(on(st(ell*(ations?)?)?)?)?2(\.0)?$'
 )
 
-### COLLABS ###
+### COLLABS AND SPECIAL REM ###
 
 DC_UNIVERSE = MutuallyExclusiveEvent(
     title='DC Universe',
@@ -296,15 +296,81 @@ DC_UNIVERSE = MutuallyExclusiveEvent(
     pattern=r'((bat|super)(man)?|dc)'
 )
 
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/4jofo7/megathread_official_na_final_fantasy_collab_thread/
 FINAL_FANTASY = MutuallyExclusiveEvent(
     title='Final Fantasy',
     members=multmerge(
-        dict.fromkeys([2039, 2045, 2047, 2049, 2783], 7),
+        dict.fromkeys([2029, 2031, 2043, 2767, 2778], 4),
         dict.fromkeys([2033, 2035, 2037, 2041, 2770, 2772, 2774, 2776, 2782], 5),
-        dict.fromkeys([2029, 2031, 2043, 2767, 2778], 4)
+        dict.fromkeys([2039, 2045, 2047, 2049, 2783], 7)
     ),
     pattern=r'^ff$'
 )
+
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/3ok38m/megathread_official_pad_halloween_thread/
+HALLOWEEN = MutuallyExclusiveEvent(
+    title='Halloween',
+    members=multmerge(
+        dict.fromkeys([2407], 0.5),
+        dict.fromkeys([2406], 2.5),
+        dict.fromkeys([1792, 1793, 2316, 2409, 2410, 2411], 1.75),
+        dict.fromkeys([630, 632, 634, 636, 638, 1614, 1616, 1618, 1620, 1622, 1624, 1626,
+                       1784, 1785, 1791, 1794, 2314, 2315], 1.5),
+        dict.fromkeys([1412, 1414, 1416, 1418, 1420, 2408, 2412], 8.5)
+    ),
+    pattern=r'^h(al+o)?w(e+n)?$'
+)
+
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/3w40ow/megathread_official_pad_christmas_event_thread/
+CHRISTMAS = MutuallyExclusiveEvent(
+    title='Christmas',
+    members=multmerge(
+        dict.fromkeys([2511, 2512], 0.5),
+        dict.fromkeys([1783, 2514], 2),
+        dict.fromkeys([1782, 2513], 2.5),
+        dict.fromkeys([2515, 2516, 2517, 2518, 2519, 2520], 15)
+    ),
+    pattern=r'^(x|christ)mas$'
+)
+
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/3yuzlb/megathread_official_pad_new_years_event_thread/
+NEW_YEARS = MutuallyExclusiveEvent(
+    title="New Year's",
+    members=multmerge(
+        dict.fromkeys([2533, 2534], 0.7),
+        dict.fromkeys([2536, 2537], 1.3),
+        dict.fromkeys([2535, 2538], 3),
+        dict.fromkeys([2574], 10),
+        dict.fromkeys([2539, 2540, 2541, 2542], 20)
+    ),
+    pattern=r'n(ew)?y(ears?)?$'
+)
+
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/3g3mkl/megathread_official_pad_beach_party_thread/
+BEACH = MutuallyExclusiveEvent(
+    title='Beach Party',
+    members=multmerge(
+        dict.fromkeys([2290], 0.3),
+        dict.fromkeys([1518, 2287, 2292], 0.9),
+        dict.fromkeys([1792, 1793, 2288, 2291, 2316], 1.4),
+        dict.fromkeys([1784, 1785, 1791, 1794, 2314, 2315], 2.5),
+        dict.fromkeys([1786, 1787, 1788, 1789, 1790, 2286], 12.5)
+    ),
+    pattern=r'^beach$'
+)
+
+# rates from https://www.reddit.com/r/PuzzleAndDragons/comments/4d5i83/megathread_official_pad_academy_thread/
+ACADEMY = MutuallyExclusiveEvent(
+    title='PAD Academy',
+    members=multmerge(
+        dict.fromkeys([2813, 2814], 2),
+        dict.fromkeys([2014, 2015, 2017], 3),
+        dict.fromkeys([2515, 2821], 6),
+        dict.fromkeys([2816, 2817, 2818, 2819, 2820], 15)
+    ),
+    pattern=r'^(academy|school)$'
+)
+
 
 CURRENT = DIRECTORS + INDIAN + INDIAN2
 CURRENT.pattern = r'^cur+(ent)?$'
@@ -314,4 +380,5 @@ EVENTS = [CURRENT, DIRECTORS, GFE4X,
           GRECO, JAPANESE, INDIAN, NORSE, EGYPTIAN, GREEK, ARCHANGEL,
           ARCHDEMON, CHINESE, JAPANESE2, HEROES, THREE_KINGDOMS, INDIAN2,
           EGYPTIAN2, ANGELS, SENGOKU, CONSTELLATIONS, CONSTELLATIONS2,
-          DC_UNIVERSE, FINAL_FANTASY]
+          DC_UNIVERSE, FINAL_FANTASY,
+          HALLOWEEN, CHRISTMAS, NEW_YEARS, BEACH, ACADEMY]
