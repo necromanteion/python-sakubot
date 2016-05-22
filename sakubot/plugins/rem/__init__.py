@@ -3,6 +3,7 @@ import inflect
 from sakubot import sakubot
 from sakubot.plugins import paddb
 
+from . import formatting as fmt
 from .events import DEFAULT, EVENTS
 from .parsing import first_int, matches
 from .structures import ErrorRaisingArgumentParser
@@ -12,6 +13,7 @@ engine = inflect.engine()
 
 parser = ErrorRaisingArgumentParser(prog='.rem', add_help=False)
 parser.add_argument('-n', default=1, type=int)
+parser.add_argument('-h', '--hide', action='store_true')
 
 group = parser.add_mutually_exclusive_group(required=False)
 group.add_argument('-c', '--chance', metavar='ID', type=int)
@@ -24,7 +26,7 @@ def rem(prefix, target, message):
     try:
         flags, args = parser.parse_known_args(message.split())
     
-    except ValueError:
+    except (TypeError, ValueError):
         return usage(prefix, target)
     
     # build weighted rem from unparsed args
@@ -36,7 +38,7 @@ def rem(prefix, target, message):
     elif flags.until:
         return until(prefix, target, event=rem, card=flags.until)
     
-    return roll(prefix, target, event=rem, n=min(flags.n, 5))
+    return roll(prefix, target, event=rem, hide=flags.hide, n=min(flags.n, 5))
 
 
 def usage(prefix, target):
@@ -100,10 +102,12 @@ def until(prefix, target, event, card):
     return cc.privmsg(target, line)
 
 
-def roll(prefix, target, event, n=1):
+def roll(prefix, target, event, hide=False, n=1):
     """Roll `n` times, yielding each result as an individual privmsg."""
         
-    for card in event.roll(n):
-        line = "{0.nick}-nii's {1.formatted_title} roll: (#{2}) {3}!"
-        line = line.format(prefix, event, card, paddb.name(card) or 'some monster')
+    for card_id in event.roll(n):
+        card = paddb.lookup(card_id)
+        line = fmt.roll(prefix.nick, event.formatted_title, card, hide)
+        # line = "{0.nick}-nii's {1.formatted_title} roll: {2}!"
+        # line = line.format(prefix, event, paddb.name(card) or 'some monster')
         yield cc.privmsg(target, line)

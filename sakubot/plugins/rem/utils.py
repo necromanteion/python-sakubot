@@ -4,6 +4,18 @@ import operator
 import math
 
 
+def colorize(attribute):
+    """
+    Attribute • [Fire, Water, Wood, Light, Dark]:
+    4 12 3 8 6
+    
+    Rarity ⭐  or 🌟[1, 2, 3, 4, 5+]:
+    9 8 11 15 7
+    """
+    pass
+
+
+
 def percent(n, precision=0):
     """
     Converts `n` to an appropriately-precise percentage.
